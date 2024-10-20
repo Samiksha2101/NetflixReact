@@ -1,9 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
+import validate, { validateName } from "../utils/validate";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [errorMsg, setErrorMsg] = useState(null);
   const toggleSignIn = () => setIsSignIn(!isSignIn);
+  const email = useRef();
+  const password = useRef();
+  const name = useRef();
+  const submitForm = () => {
+    let message = "";
+    if (isSignIn) {
+      message = validate(
+        email.current.value,
+        password.current.value
+        // name.current.value
+      );
+    } else {
+      message = validateName(
+        email.current.value,
+        password.current.value,
+        name.current.value
+      );
+      console.log(name);
+    }
+    setErrorMsg(message);
+    console.log(message);
+    // console.log(name.current.value);
+  };
+
   return (
     <div>
       <Header />
@@ -16,28 +42,38 @@ const Login = () => {
         </div>
         <div className="absolute bg-black bg-opacity-50 h-full w-full">
           <div className="absolute bg-black bg-opacity-80 w-[400px] left-0 right-0 mx-auto mt-24">
-            <form className="my-10 mx-14 text-white  mt-16">
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="my-10 mx-14 text-white  mt-16"
+            >
               <h1 className="text-2xl font-bold ">
                 {isSignIn ? "Sign In" : "Sign Up"}
               </h1>
               {!isSignIn ? (
                 <input
-                  className="bg-gray-800 mt-7 mb-1 mt-9 p-3 w-full border border-gray-500 bg-transparent rounded-md"
+                  ref={name}
+                  className="bg-gray-800  mb-1 mt-9 p-3 w-full border border-gray-500 bg-transparent rounded-md"
                   type="text"
                   placeholder="Full Name"
                 ></input>
               ) : null}
               <input
+                ref={email}
                 className="bg-gray-800 mt-7 my-4 p-3 w-full border border-gray-500 bg-transparent rounded-md"
                 type="text"
                 placeholder="Email"
               ></input>
               <input
+                ref={password}
                 className="bg-gray-800 my-4 p-3 w-full border border-gray-500 bg-transparent rounded-md"
                 type="text"
                 placeholder="Password"
               ></input>
-              <button className="bg-red-600 my-3 p-2 w-full rounded-lg">
+              {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+              <button
+                className="bg-red-600 my-3 p-2 w-full rounded-lg"
+                onClick={submitForm}
+              >
                 {isSignIn ? "Sign In" : "Sign Up"}
               </button>
               <p onClick={toggleSignIn} className="cursor-pointer ">
