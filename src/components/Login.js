@@ -1,6 +1,15 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import validate, { validateName } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+import { BG_IMG, PROFILE_IMG } from "../utils/Constants";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -9,25 +18,74 @@ const Login = () => {
   const email = useRef();
   const password = useRef();
   const name = useRef();
+  const dispatch = useDispatch();
   const submitForm = () => {
     let message = "";
     if (isSignIn) {
-      message = validate(
+      message = validate(email.current.value, password.current.value);
+      setErrorMsg(message);
+      if (message) return null;
+      console.log("In sign In " + email.current.value + " " + message);
+      signInWithEmailAndPassword(
+        auth,
         email.current.value,
         password.current.value
-        // name.current.value
-      );
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = auth.currentUser;
+          console.log(user.displayName);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + errorMessage);
+        });
     } else {
       message = validateName(
         email.current.value,
         password.current.value,
         name.current.value
       );
-      console.log(name);
+      console.log("In sign up" + name.current.value + " " + message);
+      setErrorMsg(message);
+      if (message) return null;
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: PROFILE_IMG,
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, displayName, email } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  displayName: displayName,
+                  email: email,
+                })
+              );
+              console.log(auth.currentUser);
+            })
+            .catch((error) => {
+              // An error occurred
+              setErrorMsg(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + errorMessage);
+        });
     }
-    setErrorMsg(message);
-    console.log(message);
-    // console.log(name.current.value);
   };
 
   return (
@@ -35,10 +93,7 @@ const Login = () => {
       <Header />
       <div>
         <div className="absolute">
-          <img
-            src="https://assets.nflxext.com/ffe/siteui/vlv3/7c0e18aa-2c95-474d-802e-7f30e75dcca4/web/IN-en-20241014-TRIFECTA-perspective_e7121311-c11e-4809-a3e6-22abffa33569_large.jpg"
-            alt="bg-img"
-          ></img>
+          <img src={BG_IMG} alt="bg-img" className="h-screen w-screen  "></img>
         </div>
         <div className="absolute bg-black bg-opacity-50 h-full w-full">
           <div className="absolute bg-black bg-opacity-80 w-[400px] left-0 right-0 mx-auto mt-24">

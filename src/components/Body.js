@@ -4,6 +4,8 @@ import Login from "./Login";
 import Browse from "./Browse";
 
 const Body = () => {
+  //to call only once
+
   return <RouterProvider router={appRouter}></RouterProvider>;
 };
 
