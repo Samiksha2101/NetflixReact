@@ -4,13 +4,15 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { LOGO, USER_AVTAR } from "../utils/Constants";
+import { LOGO, SUPPORTED_LANG, USER_AVTAR } from "../utils/Constants";
+import { toggleAction } from "../utils/gptSlice";
+import { changeLang } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-
+  const gptSearchBool = useSelector((store) => store.gpt.toggleGptSearch);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -46,15 +48,39 @@ const Header = () => {
         // An error happened.
       });
   };
+  const handleToggle = () => {
+    dispatch(toggleAction());
+  };
+  const changeLanguage = (e) => {
+    dispatch(changeLang(e.target.value));
+  };
   return (
-    <div className="absolute z-30 flex justify-between w-full">
-      <img className="w-60" src={LOGO} alt="logo"></img>
+    <div className="absolute z-30 flex  w-full">
+      <div>
+        <img className="w-60" src={LOGO} alt="logo"></img>
+      </div>
+
       {user && (
-        <div className="flex items-center">
-          <img className="h-8 w-8 mr-2" src={USER_AVTAR} alt="userAvtar"></img>
-          <p className="mr-2">{user.displayName}</p>
+        <div className="flex items-center justify-end   w-full">
+          <button className="bg-red-400 rounded p-2 m-2" onClick={handleToggle}>
+            {gptSearchBool ? "Home" : "GPT Search"}
+          </button>
+          {gptSearchBool && (
+            <select
+              className="p-1 bg-slate-600 text-white"
+              onChange={(e) => changeLanguage(e)}
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <img className="h-8 w-8 mx-2" src={USER_AVTAR} alt="userAvtar"></img>
+          <p className="mr-2 text-white">{user.displayName}</p>
           <button
-            className="font-bold text-gray-400  mr-3"
+            className="font-bold text-black p-2 rounded  mr-3 bg-white opacity-80"
             onClick={handleSignOut}
           >
             Sign Out

@@ -4,11 +4,11 @@ import useMovieTrailer from "../hooks/useMovieTrailer";
 const VideoBg = ({ movieId }) => {
   useMovieTrailer(movieId);
   const trailer = useSelector((store) => store.movies?.trailerVideo);
-  console.log(trailer);
+  //   console.log(trailer);
   return (
     <div className="w-full overflow-hidden">
       <iframe
-        className=" w-full h-full transform scale-150 z-0 aspect-video mt-[-20px]"
+        className=" w-full h-full transform scale-150 z-0 aspect-video mt-[0px]"
         src={
           "https://www.youtube.com/embed/" +
           trailer?.key +

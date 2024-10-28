@@ -14,3 +14,17 @@ export const API_OPTIONS = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDUwMGNmZWYyYThmY2RhMDAwOGY3NWE0YjFjM2IzOSIsIm5iZiI6MTcyOTc3MjY5OC45MTU0ODMsInN1YiI6IjY3MWExODQ0NzY5MTA3ZDc3YjQ3ODkwNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uEKse_Pbf0Gp-gPN_z-5ripOy8Ebr99twiBUkMGJEyo",
   },
 };
+export const CDN_IMG_URLS = "https://image.tmdb.org/t/p/w500/";
+export const NOW_PLAYING =
+  "https://api.themoviedb.org/3/movie/now_playing?&page=1";
+export const POPULAR =
+  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+export const TOP_RATED =
+  "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
+export const UPCOMING =
+  "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+export const SUPPORTED_LANG = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "marathi", name: "Marathi" },
+];
