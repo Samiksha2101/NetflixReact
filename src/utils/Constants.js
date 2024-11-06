@@ -10,8 +10,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MDUwMGNmZWYyYThmY2RhMDAwOGY3NWE0YjFjM2IzOSIsIm5iZiI6MTcyOTc3MjY5OC45MTU0ODMsInN1YiI6IjY3MWExODQ0NzY5MTA3ZDc3YjQ3ODkwNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uEKse_Pbf0Gp-gPN_z-5ripOy8Ebr99twiBUkMGJEyo",
+    Authorization: "Bearer " + process.env.REACT_APP_TMDB_KEY,
   },
 };
 export const CDN_IMG_URLS = "https://image.tmdb.org/t/p/w500/";
@@ -28,3 +27,5 @@ export const SUPPORTED_LANG = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "marathi", name: "Marathi" },
 ];
+export const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_KEY;
+export const SEARCH_MOVIE = "https://api.themoviedb.org/3/search/movie?";

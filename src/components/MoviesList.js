@@ -2,6 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 
 const MoviesList = ({ title, movies }) => {
+  if (!movies) return null;
   return (
     <div className="p-0  ">
       <h1 className="text-white text-2xl p-2 px-10">{title}</h1>

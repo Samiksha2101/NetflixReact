@@ -24,8 +24,9 @@ const Login = () => {
     if (isSignIn) {
       message = validate(email.current.value, password.current.value);
       setErrorMsg(message);
+
       if (message) return null;
-      console.log("In sign In " + email.current.value + " " + message);
+
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -34,7 +35,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = auth.currentUser;
-          console.log(user.displayName);
           // ...
         })
         .catch((error) => {
@@ -48,9 +48,10 @@ const Login = () => {
         password.current.value,
         name.current.value
       );
-      console.log("In sign up" + name.current.value + " " + message);
       setErrorMsg(message);
+
       if (message) return null;
+
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -73,7 +74,6 @@ const Login = () => {
                   email: email,
                 })
               );
-              console.log(auth.currentUser);
             })
             .catch((error) => {
               // An error occurred
@@ -93,7 +93,11 @@ const Login = () => {
       <Header />
       <div>
         <div className="absolute">
-          <img src={BG_IMG} alt="bg-img" className="h-screen w-screen  "></img>
+          <img
+            src={BG_IMG}
+            alt="bg-img"
+            className="h-screen w-screen fixed "
+          ></img>
         </div>
         <div className="absolute bg-black bg-opacity-50 h-full w-full">
           <div className="absolute bg-black bg-opacity-80 w-[400px] left-0 right-0 mx-auto mt-24">

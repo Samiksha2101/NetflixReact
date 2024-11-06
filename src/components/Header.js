@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { LOGO, SUPPORTED_LANG, USER_AVTAR } from "../utils/Constants";
-import { toggleAction } from "../utils/gptSlice";
+import { removeMovies, toggleAction } from "../utils/geminiSlice";
 import { changeLang } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-  const gptSearchBool = useSelector((store) => store.gpt.toggleGptSearch);
+  const aiSearchBool = useSelector((store) => store.gemini.toggleGptSearch);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -50,6 +50,7 @@ const Header = () => {
   };
   const handleToggle = () => {
     dispatch(toggleAction());
+    dispatch(removeMovies());
   };
   const changeLanguage = (e) => {
     dispatch(changeLang(e.target.value));
@@ -63,9 +64,9 @@ const Header = () => {
       {user && (
         <div className="flex items-center justify-end   w-full">
           <button className="bg-red-400 rounded p-2 m-2" onClick={handleToggle}>
-            {gptSearchBool ? "Home" : "GPT Search"}
+            {aiSearchBool ? "Home" : "Gemini Search"}
           </button>
-          {gptSearchBool && (
+          {aiSearchBool && (
             <select
               className="p-1 bg-slate-600 text-white"
               onChange={(e) => changeLanguage(e)}

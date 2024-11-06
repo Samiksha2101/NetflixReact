@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import GptSearchPage from "./GptSearchPage";
 
 const Browse = () => {
-  const gptToggle = useSelector((store) => store.gpt.toggleGptSearch);
+  const geminiToggle = useSelector((store) => store.gemini.toggleGptSearch);
 
   useNowPlayingMovies();
   usePopularMovies();
@@ -27,7 +27,7 @@ const Browse = () => {
   return (
     <div>
       <Header></Header>
-      {gptToggle ? (
+      {geminiToggle ? (
         <GptSearchPage />
       ) : (
         <>

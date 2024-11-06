@@ -1,8 +1,6 @@
 import React from "react";
 
 const Title = ({ title, overview }) => {
-  //   console.log("movie");
-
   return (
     <div className="absolute w-full z-20 bg-gradient-to-r from-black aspect-video pt-60">
       <h1 className="font-bold text-2xl text-white ml-24 ">{title}</h1>
