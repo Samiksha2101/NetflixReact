@@ -13,7 +13,6 @@ const validate = (email, password) => {
   return null;
 };
 export const validateName = (email, password, name) => {
-  console.log("inside name");
   if (name === "") return "Check your name again.";
   if (name) {
     const nameBool = /^[a-zA-Z'-.\s]+$/.test(name);
