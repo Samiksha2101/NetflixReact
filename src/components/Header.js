@@ -56,14 +56,18 @@ const Header = () => {
     dispatch(changeLang(e.target.value));
   };
   return (
-    <div className="absolute z-30 flex  w-full">
+    <div className="absolute z-30 flex flex-col md:flex-row w-full">
       <div>
-        <img className="w-60" src={LOGO} alt="logo"></img>
+        <img
+          className="w-40 md:w-60 mx-auto md:mx-0"
+          src={LOGO}
+          alt="logo"
+        ></img>
       </div>
 
       {user && (
-        <div className="flex items-center justify-end   w-full">
-          <button className="bg-red-400 rounded p-2 m-2" onClick={handleToggle}>
+        <div className="flex items-center md:justify-end justify-center w-full">
+          <button className="bg-red-400 rounded p-1 m-2" onClick={handleToggle}>
             {aiSearchBool ? "Home" : "Gemini Search"}
           </button>
           {aiSearchBool && (
@@ -78,10 +82,14 @@ const Header = () => {
               ))}
             </select>
           )}
-          <img className="h-8 w-8 mx-2" src={USER_AVTAR} alt="userAvtar"></img>
+          <img
+            className="h-8 w-8 mx-2 hidden md:block"
+            src={USER_AVTAR}
+            alt="userAvtar"
+          ></img>
           <p className="mr-2 text-white">{user.displayName}</p>
           <button
-            className="font-bold text-black p-2 rounded  mr-3 bg-white opacity-80"
+            className="font-bold text-black p-1 rounded  mr-3 bg-white opacity-80"
             onClick={handleSignOut}
           >
             Sign Out

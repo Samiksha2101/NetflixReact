@@ -96,11 +96,11 @@ const Login = () => {
           <img
             src={BG_IMG}
             alt="bg-img"
-            className="h-screen w-screen fixed "
+            className="h-full w-full fixed object-cover "
           ></img>
         </div>
         <div className="absolute bg-black bg-opacity-50 h-full w-full">
-          <div className="absolute bg-black bg-opacity-80 w-[400px] left-0 right-0 mx-auto mt-24">
+          <div className="absolute bg-black bg-opacity-80 md:w-[400px] left-0 right-0 mx-auto mt-24">
             <form
               onSubmit={(e) => e.preventDefault()}
               className="my-10 mx-14 text-white  mt-16"

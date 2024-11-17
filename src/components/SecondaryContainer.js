@@ -12,7 +12,7 @@ const SecondaryContainer = () => {
   if (!nowPlayingMovies) return;
   return (
     <div className="bg-black">
-      <div className="z-30 relative -mt-40">
+      <div className="z-30 relative mt-0 md:-mt-0 lg:-mt-28 ">
         <MoviesList
           movies={nowPlayingMovies}
           title={"Now Playing Movies"}

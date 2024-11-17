@@ -24,7 +24,7 @@ const SearchBar = () => {
       (result) =>
         result.title.toLowerCase().trim() === movie.toLowerCase().trim()
     );
-
+    // console.log(result);
     if (!result && json.results.length > 0) {
       // Fallback: If no exact match, use the first result
       result = json.results[0];
@@ -34,7 +34,8 @@ const SearchBar = () => {
       );
     }
 
-    return result ? [result] : []; // return json.results;
+    // return result ? [result] : [];
+    return result ? result : null;
   };
 
   const handleGenAiSearch = async () => {
@@ -47,37 +48,38 @@ const SearchBar = () => {
     const movieNames = await model.generateContent(prompt);
 
     if (!movieNames) return null;
-    const moviePromise = movieNames.response.text().split(", ");
-
-    const promiseArr = moviePromise.map((name) => {
-      return searchMoviesSuggestion(name);
+    const movieNameArr = movieNames.response.text().split(", ");
+    const array = [];
+    // const promiseArr =
+    movieNameArr.map((name) => {
+      return array.push(searchMoviesSuggestion(name));
     });
 
     // [promise,promise,promise,promise,promise]
-    const TMDB_result = await Promise.all(promiseArr);
-
+    const TMDB_result = await Promise.all(array);
+    console.log(TMDB_result);
     dispatch(
       addMovieSuggestions({
-        movieNames: moviePromise,
+        movieNames: movieNameArr,
         suggestedMovies: TMDB_result,
       })
     );
   };
 
   return (
-    <div className="pt-[10%] flex justify-center">
+    <div className="md:pt-[10%] pt-[40%] flex justify-center w-full ">
       <form
-        className=" w-1/3 grid grid-cols-12 "
+        className="w-full  md:w-1/3 grid grid-cols-12 "
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           placeholder={language[langKey].gpSearchPlaceholder}
           type="text"
-          className="p-2 m-2 col-span-9 "
+          className="p-2 m-2 col-span-9  "
           ref={inputRef}
         ></input>
         <button
-          className="bg-red-500 p-2 m-2 col-span-3"
+          className="bg-red-500 p-2 m-2 col-span-3 "
           onClick={handleGenAiSearch}
         >
           {language[langKey].search}

@@ -1,18 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MoviesList from "./MoviesList";
+import MovieCard from "./MovieCard";
 const GetSearchSuggestion = () => {
   const { movieNames, suggestedMovies } = useSelector((store) => store.gemini);
   if (!movieNames || !suggestedMovies) return null;
   return (
-    <div className="w-full  mt-7">
-      <div className=" flex justify-evenly">
-        {movieNames.map((movieName, index) => (
-          <MoviesList
-            key={movieName}
-            movies={suggestedMovies[index]}
-            title={""}
-          ></MoviesList>
+    <div className="w-screen mt-7  ">
+      <div className=" justify-evenly flex flex-wrap ">
+        {suggestedMovies.map((movie, index) => (
+          <MovieCard
+            key={movie.title}
+            movie={suggestedMovies[index]}
+          ></MovieCard>
         ))}
       </div>
     </div>

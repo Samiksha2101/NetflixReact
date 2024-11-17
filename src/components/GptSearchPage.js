@@ -5,8 +5,13 @@ import GetSearchSuggestion from "./GetSearchSuggestion";
 
 const GptSearchPage = () => {
   return (
-    <div className="bg-black bg-opacity-70 aspect-video ">
-      <img src={BG_IMG} alt="bgImg" className="fixed -z-10"></img>
+    <div className=" bg-black bg-opacity-70 min-h-screen md:min-h-screen   ">
+      <img
+        src={BG_IMG}
+        alt="bgImg"
+        className="fixed -z-10 h-screen w-screen object-cover md:w-screen md:fixed "
+      ></img>
+
       <SearchBar />
       <GetSearchSuggestion></GetSearchSuggestion>
     </div>
